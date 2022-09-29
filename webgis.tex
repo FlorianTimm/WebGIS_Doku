@@ -152,6 +152,16 @@ Sofern keine Ports bereits vorher belegt waren, ist der Planer dann unter \url{h
 
 \section{Bedienung}
 
+Die Bedienung erfolgt als Webanwendung im Browser. Der Startbildschirm ist in \autoref{img:screenshot} zu sehen.
+
+\begin{figure} % setzt die Abbildung an genau diese Stelle, sonst landet sich oben auf der Seite
+ \centering
+ \includegraphics[width=1\textwidth]{./img/screenshot.png}
+\centering
+ \caption{Startbildschirm der Anwendung} %Bildunterschrift
+ \label{img:screenshot} %ID fürs Bild
+\end{figure}
+
 \subsection{Auswählen des Messgebiet}
 Die Navigation zum gewüsnchten Gebiet ist möglich mittels Verschieben der Karten Karten und zoomen sowie mit der Ortssuche oben rechts. Die Ortssuche bevorzugt dabei Orte, welche sich im oder Nahe des Kartenausschnittes befinden.
 
@@ -167,7 +177,7 @@ Mit den beiden weiteren Schiebereglern \textit{Überlappung} kann die Überlappu
 Hieraus berechnet die Software dann die Trajektorie und die Positionen der einzlenen Bilder. Die sich hieraus ergebene Flughöhe und -länge, sowie die Anzahl der Bilder kann dem unteren Teil des Menüs entnommen werden.
 
 \subsection{Speichern des Projektes / Datenexport}
-Die Schaltflächen am unteren Rad des Hauptmenüs ermöglichen es, das Projekt zu speichern. Mit der Schaltfläche \textit{Projekt speichern} wird das Projekt in der Datenbank gesichert und ein Permalink erzeugt. Mit den Schaltflächen \textit{KML} und \textit{GPX} werden die Aufnahmepunkte im entsprechenden Format heruntergeladen und können beispielsweise in die Flugsteuerungssoftware des UAV importiert werden. Als weitere Möglichkeit kann der Kartenauschnitt auch als PDF exportiert und beispielsweise ausgedruckt werden.
+Die Schaltflächen am unteren Rad des Hauptmenüs ermöglichen es, das Projekt zu speichern. Mit der Schaltfläche \textit{Projekt speichern} wird das Projekt in der Datenbank gesichert und ein Permalink erzeugt. Mit den Schaltflächen \textit{KML} und \textit{GPX} werden die Aufnahmepunkte im entsprechenden Format heruntergeladen und können beispielsweise in die Flugsteuerungssoftware des UAV importiert werden. Als weitere Möglichkeit kann der aktuelle Kartenauschnitt auch als PDF exportiert und beispielsweise ausgedruckt werden.
 
 \subsection{Umschalten der Karte}
 Der Reiter \textit{Layer} ermöglicht das Ändern der Hintergrundkarte und das Anzeigen von Fachdaten.
@@ -183,7 +193,7 @@ Das \textit{UAV}-Menü ermöglicht das Hinzufügen und Ändern von UAV-Einstellu
 Um einen Datensatz zu ändern, kann dieser in der Combobox oben ausgewählt werden und anschließend die Daten angepasst werden und entweder mit \textit{Ändern} direkt gespeichert oder mit \textit{Neu} als neuer Datensatz abgelegt werden. Um einen neuen Datensatz einzufügen, wird der passendste bestehende Datensatz ausgewählt und dann die Daten entsprechend verändert und dann mit \textit{Neu} der Datensatz gespeichert.
 
 \subsection{Genehmigung-Menü}
-Dieser Menü-Punkt ermöglicht das Prüfen des Projektgebietes auf genehmigungsfreies Fliegen. Hierbei werden die Beschränkungen aus der Luftverkehrsverordnung berück\-sichtigt, die sich auf die Örtlichkeit beziehen. Nicht geprüft wird aktuell der Abstand zu Flughäfen und -plätzen. Diese Regelungen werden vom Bundesland speziell für jedem Flughafen/-platz festgelegt.
+Dieser Menü-Punkt ermöglicht das Prüfen des Projektgebietes auf genehmigungsfreies Fliegen. Hierbei werden die Beschränkungen aus der Luftverkehrsverordnung berück\-sichtigt, die sich auf die Örtlichkeit beziehen. Nicht geprüft wird aktuell der Abstand zu Flughäfen und -plätzen. Diese Regelungen werden vom Bundesland speziell für jedem Flughafen/-platz festgelegt und können daher nicht einfach so aus Geobasisdaten abgeleitet werden.
 
 Nach dem Einzeichnen eines Projektgebietes kann mit dem \textit{Prüfen}-Button das aktuelle Gebiet geprüft werden. Sofern ein Eintrag in der Liste mit der Maus überfahren wird, leuchten die entsprechenden Gebiete rechts in der Karte auf. Aktuell wird hierbei die Bounding-Box überprüft, es kann also sein, dass zu viele Beschränkungen angezeigt werden. Außerdem wird nur mit Geometrien geprüft, die sich im Gebiet befinden. Von außerhalb reinragende Verbotszonen können daher noch nicht berücksichtigt werden.
 
@@ -192,28 +202,43 @@ Nach dem Einzeichnen eines Projektgebietes kann mit dem \textit{Prüfen}-Button 
 
 Das Benutzeroberfläche (Frontend) sowie die Schnittstelle zur Datenbank (Backend) basieren auf TypeScript, einen Aufsatz auf JavaScript, der JavaScript hauptsächlich um eine statische Typüberprüfung erweitert. Hierdurch wird die Identifikation von Fehlern in größeren Projekten erleichtert. \citep[S. 3]{typescript}
 
-Außerdem wurde das gesamte Projekt objekt-orientiert programmiert. Das Klassendiagramm ist \autoref{img:klassendiagramm} zu sehen.
+Außerdem wurde das gesamte FrontEnd objekt-orientiert programmiert. Das Klassendiagramm ist \autoref{img:klassendiagramm} zu sehen. Es wurde hierbei versucht, die Kopplung der einzelnen Klassen möglichst gering zu halten. Desweiteren wurde versucht, die Programmlogik, die Domänenklassen und die grafische Benutzeroberfläche in verschiedenene Klassen aufzuteilen, so dass Erweiterungen oder eine Umstrukturierung des Systemes möglich bleibt.
+
+Das Backend ist in seinem Umfang relativ kompakt -- es besteht nur aus einer Datei -- so dass hier auf einen objekt-orientierten Ansatz verzichtet wurde.
 
 \begin{figure} % setzt die Abbildung an genau diese Stelle, sonst landet sich oben auf der Seite
  \centering
  \includegraphics[width=1\textwidth]{./img/klassendiagramm.pdf}
 \centering
- \caption{Klassendiagramm} %Bildunterschrift
+ \caption{Klassendiagramm der Client-Anwendung} %Bildunterschrift
  \label{img:klassendiagramm} %ID fürs Bild
 \end{figure}
 
-Im folgenden wird auf einzelne Komponenten detailliert eingegangen.
+Im Folgenden wird auf einzelne Komponenten detaillierter eingegangen.
 
 \subsection{VectorTiles}
 Für die Darstellung der Flugverbotsgebiete wurde der relativ neue Dienst Basemap des Bundesamtes für Kartographie und Geodäsie als VectorTiles genutzt. VectorTiles liefern ähnlich wie ein WFS Vectordaten aus, jedoch in gekachelter Form für den Zweck der Visualisierung. Vorteil gegenüber einem WMS ist, das hier das Darstellung der Daten selber festgelegt werden kann. Im Gegensatz zu einem WFS ist er aber auf die Darstellung und auf möglichst geringe Datenmengen optimiert.
 
 Die Visualisierung wurde hier so angepasst, dass Beispielsweise Bundesstraßen entsprechend der Größe ihrer Flugbeschränkungen dargestellt werden. Der Reiter \textit{Genehmigung} nutzt diese Daten dann auch zur Prüfung auf Flugbeschränkungen und ermöglicht auch das Aufblinken der einzelnen Beschränkungen.
 
-\subsection{REST-Schnittstelle}
+\subsection{Datenspeicherung/REST-Schnittstelle}
+Die Speicherung der Projekte und der UAV-Modelle erfolgt in einer SQLite-Datenbank auf dem Server. So wird auch eine lokale Nutzung einfach möglich, da als Voraussetzung für den Server nur eine Node.js-Installation notwendig ist.
+
+Die Kommunikation mit dem Server und erfolgt über eine REST-Schnittstelle.
 
 \subsection{Bildflugberechnungen}
+Die Bildflugplanung erfolgt aktuell nur in Form von Nadirbildern. Eine evtl. für die Berechnung der Kameraparameter optimalere Aufnahme \citep{opendronemap} \todo{Seitenzahl} von leicht geneigten Bildern ist aktuell nicht möglich. Die Berechnung der Bildgröße erfolgt vereinfacht mit dem Strahlensatz und der Annahme eines ebenen Grundes:
 
-%\clearpage
+\begin{equation*}
+    \frac{\text{[Brennweite]}}{\text{[Sensorbreite]}} =  \frac{\text{[Flughöhe]}}{\text{[Bildbreite]}} 
+\end{equation*}
+
+Eine Erweiterung um die Berücksichtigung des Geländes erscheint als relativ aufwendig und wurde daher verworfen.
+
+\subsection{Responsible-Design}
+Der UAV-Planer ist so gestaltet, dass er sich auch an kleine Display wie Tablets oder Mobiltelefone anpasst. Hierdurch wird auch eine mobile Nutzung ermöglicht.
+
+\clearpage
 %Literatur
 \renewcommand\UrlFont\itshape
 \renewcommand{\refname}{Literaturverzeichnis}
